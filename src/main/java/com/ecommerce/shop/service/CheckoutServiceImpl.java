@@ -24,7 +24,6 @@ public class CheckoutServiceImpl implements CheckoutService {
 
     public CheckoutServiceImpl(CustomerRepository customerRepository,
                                @Value("${stripe.key.secret}") String secretKey) {
-
         this.customerRepository = customerRepository;
         Stripe.apiKey = secretKey;
     }
@@ -52,11 +51,8 @@ public class CheckoutServiceImpl implements CheckoutService {
         if (customerFromDB != null)
             customer = customerFromDB;
 
-
         customer.add(order);
-
         customerRepository.save(customer);
-
         return new PurchaseResponse(orderTrackingNumber);
     }
 
