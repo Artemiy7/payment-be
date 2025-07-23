@@ -1,7 +1,6 @@
 package com.ecommerce.shop.constant;
 
 public class Constants {
-
     public static final String CARD = "card";
     public static final String AMOUNT = "amount";
     public static final String CURRENCY = "currency";
