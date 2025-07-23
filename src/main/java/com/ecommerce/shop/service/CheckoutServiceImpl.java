@@ -1,5 +1,6 @@
 package com.ecommerce.shop.service;
 
+import com.ecommerce.shop.constant.Constants;
 import com.ecommerce.shop.dao.CustomerRepository;
 import com.ecommerce.shop.dto.PaymentInfo;
 import com.ecommerce.shop.dto.Purchase;
@@ -25,8 +26,6 @@ public class CheckoutServiceImpl implements CheckoutService {
                                @Value("${stripe.key.secret}") String secretKey) {
 
         this.customerRepository = customerRepository;
-
-        // initialize Stripe API with secret key
         Stripe.apiKey = secretKey;
     }
 
@@ -65,14 +64,14 @@ public class CheckoutServiceImpl implements CheckoutService {
     public PaymentIntent createPaymentIntent(PaymentInfo paymentInfo) throws StripeException {
 
         List<String> paymentMethodTypes = new ArrayList<>();
-        paymentMethodTypes.add("card");
+        paymentMethodTypes.add(Constants.CARD);
 
         Map<String, Object> params = new HashMap<>();
-        params.put("amount", paymentInfo.getAmount());
-        params.put("currency", paymentInfo.getCurrency());
-        params.put("payment_method_types", paymentMethodTypes);
-        params.put("description", "ecommerce-shop purchase");
-        params.put("receipt_email", paymentInfo.getReceiptEmail());
+        params.put(Constants.AMOUNT, paymentInfo.getAmount());
+        params.put(Constants.CURRENCY, paymentInfo.getCurrency());
+        params.put(Constants.PAYMENT_METHOD_TYPES, paymentMethodTypes);
+        params.put(Constants.DESCRIPTION, "purchase");
+        params.put(Constants.RECEIPT_EMAIL, paymentInfo.getReceiptEmail());
 
         return PaymentIntent.create(params);
     }
